@@ -1,4 +1,4 @@
-# Data Analytics Portfolio — Yevhen (Eugene) Zinchenko
+# Data Analytics Portfolio - Yevhen (Eugene) Zinchenko
 
 Entry–Junior Data Analyst / BI Analyst / Analytics Engineer
 Focus: analytical thinking, data quality, business-oriented metrics
