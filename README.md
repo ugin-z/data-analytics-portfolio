@@ -1,6 +1,6 @@
 # Data Analytics Portfolio - Yevhen (Eugene) Zinchenko
 
-Entry–Junior Data Analyst / BI Analyst / Analytics Engineer
+Entry–Junior Data Analyst / BI Analyst / Analytics Engineer  
 Focus: analytical thinking, data quality, business-oriented metrics
 
 -----
@@ -113,7 +113,7 @@ Data assumptions and structure are documented in each project README.
 -----
 
 ## Contact
-LinkedIn: https://www.linkedin.com/in/eugene-zi/
+LinkedIn: https://www.linkedin.com/in/eugene-zi/  
 GitHub Portfolio: https://github.com/ugin-z/data-analytics-portfolio
 
 Preferred name: Eugene
