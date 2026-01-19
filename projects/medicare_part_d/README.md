@@ -1,3 +1,13 @@
+# Medicare Part D Cost Drivers Analysis
+
+Focus:
+- business-oriented analysis (cost drivers, outliers, geographic patterns)
+- strong data quality practices
+- reproducible data ingestion and transformation
+- and clear communication of results
+
+-----
+
 ## Project Goals
 
 ### Business Goal
@@ -19,3 +29,18 @@ Specifically, the project aims to understand which drugs, prescribers, and geogr
 - Separate exploratory analysis from production-style data processing.
 - Produce reproducible and well-documented results suitable for a portfolio project.
 
+-----
+
+## Repository Structure
+- data/
+  - raw
+  - clean
+  - mart
+  - README.md
+- notebooks/
+  - figures
+- reports/
+- src/
+- README.md
+
+-----

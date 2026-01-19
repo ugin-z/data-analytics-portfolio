@@ -51,26 +51,56 @@ The focus is not only on writing code, but on:
 
 ## Projects
 
-### Medicare Part D Cost Drivers Analysis
-Tools: Python, pandas, requests, SQL
+### Sales Analysis with Rolling Metrics
+Tools: Python, pandas, SQL
 
 Focus:
-- business-oriented analysis (cost drivers, outliers, geographic patterns)
-- strong data quality practices
-- reproducible data ingestion and transformation
-- and clear communication of results
+- time-series validation
+- rolling and MoM metrics
+- anomaly detection
+- revenue behavior analysis
 
-Directory: `projects/medicare_part_d`
+Directory: `projects/sales-analysis`
 
 -----
 
-## Project Structure
+### Cohort and Retention Analysis
+Tools: SQL, pandas
 
-- data/ — raw, cleaned, and analytics-ready datasets
-- src/ — ingestion, transformation, and data quality logic
-- notebooks/ — exploratory analysis and analytical reasoning
-- reports/ — final results and stakeholder-facing outputs
-- README.md - 
+Focus:
+- cohort construction
+- retention metrics
+- grain and join validation
+- consistency between SQL and pandas results
+
+Directory: `projects/cohort-analysis`
+
+-----
+
+### Data Quality and Sanity Checks
+Tools: Python, pandas
+
+Focus:
+- schema and type validation
+- duplicate detection by business key
+- range and domain checks
+- time coverage validation
+- aggregate reconciliation
+
+Directory: `projects/data-quality-checks`
+
+-----
+
+### API to pandas Data Pipeline
+Tools: requests, pandas
+
+Focus:
+- API request handling
+- JSON normalization
+- schema validation
+- transformation into analytical tables
+
+Directory: `projects/api-data-pipeline`
 
 -----
 
