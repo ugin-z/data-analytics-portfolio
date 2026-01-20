@@ -1,4 +1,4 @@
-#!/Users/evgeniy.z/Desktop/DataScience/data-analytics-portfolio/projects/medicare_part_d/.venv/bin/python
+#!/Users/evgeniy.z/Desktop/DataScience/data-analytics-portfolio/projects/medicare_part_d/.venv/bin/python3.12
 import sys
 from jupyter_client.kernelapp import main
 if __name__ == '__main__':
