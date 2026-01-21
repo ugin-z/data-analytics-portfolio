@@ -1,5 +1,4 @@
 # Byte-compiled / optimized / DLL files
-__pycache__/
 *.py[codz]
 *$py.class
 
@@ -215,15 +214,18 @@ __marimo__/
 *.parquet
 *.json
 
-# Python
-*.pyc
-
 # OS
 .DS_Store
 
-.venv/
-__pycache__/
-.ipynb_checkpoints/
-
 *.csv
 *.parquet
+
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+.venv/
+.ipynb_checkpoints/

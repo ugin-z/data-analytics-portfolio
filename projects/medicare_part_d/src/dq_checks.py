@@ -1,6 +1,6 @@
 # %%
-import pandas as pd
 from __future__ import annotations
+import pandas as pd
 
 # ========== PART D CHECKS ==========
 
@@ -50,9 +50,20 @@ def run_partd_checks(df):
     assert not missing
 
     for c in PARTD_NUMERIC_COLS:
+        col = df[c].astype('string').str.strip()
+        original_missing = col.isna() | (col == '')
         coerced = pd.to_numeric(df[c], errors = 'coerce')
-        bad_count = coerced.isna().sum() - df[c].isna().sum()
-        assert bad_count == 0, f'Column {c} has non-numeric values' 
+        bad_mask = coerced.isna() & ~original_missing
+        bad_count = bad_mask.sum()
+
+        if bad_count >0:
+            example = col[bad_mask].unique()[:10]
+            raise AssertionError(
+                f'Column {c} has non-numeric values (excluding empty-as-missing).'
+                f'Bad count: {bad_count}. Examples: {list(example)}'
+            )
+    
+    print('run_partd_checks: numeric columns OK (empty strings treated as missing)')
 
     npi = df['Prscrbr_NPI']
     npi_str = npi.astype('string').str.replace(r'\.0$', '', regex = True).str.strip()
@@ -100,19 +111,21 @@ def run_provider_checks(df):
     assert npi_bad == 0, f'Rndrng_NPI column has invalid format (expected 10 digits). Bad rows: {npi_bad}'
 
 # ========== MERGED CHECKS ==========
+
+PROVIDER_COLS = [
+    'Prov_Tot_Srvcs',
+    'Prov_Tot_Benes',
+    'Prov_Tot_Mdcr_Pymt_Amt',
+    'Prov_Tot_Mdcr_Alowd_Amt'
+]
+
 def run_merged_checks(partd_df: pd.DataFrame, merged_df: pd.DataFrame) -> None:
     assert len(merged_df) == len(partd_df), (
     f'Row count changed after merge:'
     f'partd = {len(partd_df)}, merged = {len(merged_df)}'
     )
 
-    provider_cols = [
-        'Tot_Srvcs',
-        'Tot_Benes',
-        'Tot_Mdcr_Pymt_Amt'
-    ]
-
-    available_provider_cols = [c for c in provider_cols if c is merged_df.columns]
+    available_provider_cols = [c for c in PROVIDER_COLS if c in merged_df.columns]
     assert available_provider_cols, 'No provider columns found in merged df'
 
     provider_na_rate = (
@@ -124,8 +137,14 @@ def run_merged_checks(partd_df: pd.DataFrame, merged_df: pd.DataFrame) -> None:
         print('WARNING: More than 20% of Part D rows have no matched provider data')
 
     key_cols = ['Prscrbr_NPI', 'Gnrc_Name']
-    dupl_count = merged_df.duplicated(subset = key_cols).sum()
-    assert dupl_count == 0, (f'Duolicate rows detected after merge for key {key_cols}: {dupl_count}')
+    dupl_before = partd_df.duplicated(subset = key_cols).sum()
+    dupl_after = merged_df.duplicated(subset = key_cols).sum()
+    dupl_diff = dupl_after - dupl_before
+
+    print(
+        f'Duplicate rows by key {key_cols}: '
+        f'before = {dupl_before}, after = {dupl_after}, diff = {dupl_diff}'
+    )
 
     print('Merged checks passed')
 

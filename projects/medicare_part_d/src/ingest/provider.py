@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 RAW_DATA_DIR = PROJECT_ROOT / 'data' / 'raw'
 RAW_DATA_DIR.mkdir(parents = True, exist_ok = True)
 
@@ -71,3 +71,14 @@ def save_raw(df: pd.DataFrame):
     df.to_csv(output_raw, index = False)
     print(f'Saved raw data to {output_raw}')
     return output_raw
+
+def load_provider(max_rows: int | None = None) -> pd.DataFrame:
+
+    df = fetch_all(max_rows = 20000)
+    save_raw(df)
+    return df
+
+if __name__ == '__main__':
+    df = load_provider(max_rows = 20000)
+    print(f'Rows fetched: {len(df)}')
+    print(df.head())
