@@ -129,8 +129,3 @@ def run_merged_checks(partd_df: pd.DataFrame, merged_df: pd.DataFrame) -> None:
 
     print('Merged checks passed')
 
-
-if __name__ == '__main__':
-    print(run_partd_checks(df))
-    print(run_provider_checks(df))
-    print(run_merged_checks(df))
