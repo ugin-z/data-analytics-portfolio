@@ -10,7 +10,7 @@ RAW_DATA_DIR = PROJECT_ROOT / 'data' / 'raw'
 RAW_DATA_DIR.mkdir(parents = True, exist_ok = True)
 
 BASE_URL = 'https://data.cms.gov/data-api/v1/dataset'
-UUID = '9552739e-3d05-4c1b-8eff-ecabf391e2e5'
+UUID = '8889d81e-2ee7-448f-8713-f071038289b5'
 
 def fetch_page(offset: int = 0, limit: int = 5000) -> list[dict]:
     
@@ -67,13 +67,7 @@ def fetch_all(max_rows: int | None = None):
 def save_raw(df: pd.DataFrame):
     
     run_date = datetime.today().strftime('%Y-%m-%d')
-    output_raw = RAW_DATA_DIR / f'raw_date_{run_date}.csv'
+    output_raw = RAW_DATA_DIR / f'raw_date_provider_{run_date}.csv'
     df.to_csv(output_raw, index = False)
     print(f'Saved raw data to {output_raw}')
     return output_raw
-
-if __name__ == '__main__':
-    df = fetch_all(max_rows = 20000)
-    print(f'Rows fetched: {len(df)}')
-    print(df.head())
-    save_raw(df)
