@@ -4,12 +4,12 @@ This document describes pandas patterns actively used across this repository
 for analytics engineering workflows (clean → mart, DQ, reproducibility).
 
 1. Grain validation
-    grain = ["prescriber_npi", "drug_name", "year"]
+    grain = ["npi", "generic_name", "year"]
     assert df.duplicated(subset=grain).sum() == 0
 
 2. Deterministic aggregations
     df_agg = (
-        df.groupby(["prescriber_npi", "year"], as_index=False)
+        df.groupby(["npi", "year"], as_index=False)
           .agg(
               total_drug_cost=("total_drug_cost", "sum"),
               claim_count=("claim_id", "count")
