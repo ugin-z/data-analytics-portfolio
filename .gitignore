@@ -213,13 +213,10 @@ __marimo__/
 *.xlsx
 *.parquet
 *.json
+*.duckdb
 
 # OS
 .DS_Store
-
-*.csv
-*.parquet
-
 
 # Python cache
 __pycache__/
