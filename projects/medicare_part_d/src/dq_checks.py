@@ -1,4 +1,3 @@
-# %%
 from __future__ import annotations
 import pandas as pd
 
@@ -56,12 +55,14 @@ def run_partd_checks(df):
         bad_mask = coerced.isna() & ~original_missing
         bad_count = bad_mask.sum()
 
-        if bad_count >0:
+        if bad_count > 0:
             example = col[bad_mask].unique()[:10]
             raise AssertionError(
                 f'Column {c} has non-numeric values (excluding empty-as-missing).'
                 f'Bad count: {bad_count}. Examples: {list(example)}'
             )
+        
+        df[c] = coerced
     
     print('run_partd_checks: numeric columns OK (empty strings treated as missing)')
 
@@ -147,4 +148,5 @@ def run_merged_checks(partd_df: pd.DataFrame, merged_df: pd.DataFrame) -> None:
     )
 
     print('Merged checks passed')
+
 

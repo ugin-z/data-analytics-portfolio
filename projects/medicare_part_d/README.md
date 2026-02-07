@@ -1,46 +1,66 @@
-# Medicare Part D Cost Drivers Analysis
+# Medicare Part D Spending Analysis (2023)
 
-Focus:
-- business-oriented analysis (cost drivers, outliers, geographic patterns)
-- strong data quality practices
-- reproducible data ingestion and transformation
-- and clear communication of results
+This project analyzes Medicare Part D prescription drug spending patterns for the 2023 calendar year using a production-style data mart architecture.
 
------
+The goal of the project is to identify key cost drivers at the drug and prescriber levels and to demonstrate applied analytical thinking suitable for Entry / Junior Data Analyst and BI Analyst roles.
 
-## Project Goals
+## Project Objectives
 
-### Business Goal
-The main business goal of this project is to identify the key cost drivers in Medicare Part D.
-Specifically, the project aims to understand which drugs, prescribers, and geographic regions contribute the most to total drug costs, and whether high costs are driven by prescription volume or by high cost per claim.
+- Analyze concentration of Medicare Part D spending at the drug level
+- Evaluate prescriber-level contribution to total program costs
+- Distinguish between price-driven and volume-driven cost drivers
+- Demonstrate data modeling, data quality, and SQL-based analytics
 
-### Analytical Goals
-- Analyze total drug costs and cost per claim across drugs, prescribers, and states.
-- Identify cost outliers using percentile-based analysis.
-- Compare volume-driven versus price-driven cost patterns.
-- Explore geographic and provider-level variations in Medicare Part D spending.
-- Summarize findings in a clear and interpretable way for non-technical stakeholders.
+## Data Architecture
 
-### Technical Goals
-- Build an end-to-end analytics pipeline using the CMS Open Data API.
-- Implement reliable data ingestion with pagination and basic error handling.
-- Apply data cleaning and transformation steps to create analytics-ready datasets.
-- Perform data quality checks, including missing values, range validation, and sanity checks.
-- Separate exploratory analysis from production-style data processing.
-- Produce reproducible and well-documented results suitable for a portfolio project.
+The project follows a layered data architecture:
 
------
+raw → clean → mart
+
+- raw/: immutable source data
+- clean/: cleaned and standardized datasets
+- mart/: analytical data marts (source of truth)
+
+All analytical data marts are stored in Parquet format and queried using SQL via DuckDB.
+
+## Analytical Data Marts
+
+The analysis is built on three analytical data marts:
+
+- mart_drug_year  
+  Drug-level spending and utilization metrics by year
+
+- mart_prescriber_drug_year  
+  Prescriber-level spending within individual drugs
+
+- mart_prescriber_year  
+  System-wide prescriber-level spending metrics
+
+## Key Findings
+
+- Medicare Part D spending is highly concentrated at the drug level, with a small set of drugs accounting for a large share of total expenditures.
+- At the system level, prescriber-level concentration is low, indicating that overall spending is broadly distributed across prescribers.
+- Within individual drugs, spending is often concentrated among a limited number of prescribers.
+- A deep dive into the highest-spending drugs shows that elevated total costs are primarily driven by high utilization rather than high cost per claim.
 
 ## Repository Structure
-- data/
-  - raw
-  - clean
-  - mart
-  - README.md
-- notebooks/
-  - figures
-- reports/
-- src/
-- README.md
 
------
+src/        - data ingestion, validation, and mart construction  
+data/       - raw, clean, and mart datasets (Parquet)  
+notebooks/  - mart construction and analytical notebooks  
+reports/    - executive summary and analytical findings  
+
+## Tools & Technologies
+
+- Python (pandas)
+- DuckDB (SQL analytics)
+- Parquet
+- Jupyter Notebook
+
+## Notes
+
+- The analysis is limited to data from the 2023 calendar year.
+- The year field is added as a structural dimension during mart construction.
+- Pandas is used only for data preparation and mart construction.
+- All analytical queries are executed using SQL against the mart layer.
+- The project emphasizes business interpretation over exploratory analysis.
