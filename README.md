@@ -6,6 +6,7 @@ Focus: analytical thinking, data quality, business-oriented metrics
 -----
 
 ## About
+---
 
 This repository contains a set of analytical case studies demonstrating how I approach data analysis in a structured, production-oriented way.
 
