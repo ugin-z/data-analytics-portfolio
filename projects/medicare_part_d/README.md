@@ -4,6 +4,10 @@ This project analyzes Medicare Part D prescription drug spending patterns for th
 
 The goal of the project is to identify key cost drivers at the drug and prescriber levels and to demonstrate applied analytical thinking suitable for Entry / Junior Data Analyst and BI Analyst roles.
 
+**Tableau Dashboards:**
+- Price vs Volume Drivers (Scatter): https://public.tableau.com/app/profile/yevhen.zinchenko/viz/MedicarePartDDrugSpending-2023_overview/Overview
+- Spending Overview & Concentration (Pareto): https://public.tableau.com/app/profile/yevhen.zinchenko/viz/ParetoAnalysisofTop50DrugsbySpending-2023Pareto/Pareto
+
 ## Project Objectives
 
 - Analyze concentration of Medicare Part D spending at the drug level
@@ -15,7 +19,7 @@ The goal of the project is to identify key cost drivers at the drug and prescrib
 
 The project follows a layered data architecture:
 
-raw → clean → mart
+raw -> clean -> mart
 
 - raw/: immutable source data
 - clean/: cleaned and standardized datasets

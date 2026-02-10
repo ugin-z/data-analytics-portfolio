@@ -7,7 +7,8 @@ Focus: analytical thinking, data quality, business-oriented metrics
 
 ## About
 
-This repository contains a set of analytical case studies demonstrating how I approach data analysis in a structured, production-oriented way.
+This repository contains a set of analytical case studies demonstrating 
+how I approach data analysis in a structured, production-oriented way.
 
 The focus is not only on writing code, but on:
 - understanding the business problem
@@ -51,63 +52,64 @@ The focus is not only on writing code, but on:
 
 ## Projects
 
-### Sales Analysis with Rolling Metrics
+### Medicare Part D - Sales Analysis with Rolling Metrics
+
+Tools: Python, pandas, requests, SQL
+Directory: `projects/medicare_part_d`
+
+Focus:
+- analytical data modeling (raw -> clean -> mart)
+- explicit grain definition and validation
+- data quality checks (duplicates, ranges, control totals)
+- drug spending analysis with price vs volume decomposition
+- concentration and distribution analysis using Pareto and scatter-based exploration, 
+with BI communication of insights
+
+This project analyzes U.S. Medicare Part D drug spending data, covering end-to-end ingestion, 
+transformation, data quality validation, and analytical reporting.
+
+-----
+
+### SFMTA Parking Citations - Cohort and Retention Analysis
+
 Tools: Python, pandas, SQL
+Directory: `projects/sfmta_parking_citations`
 
 Focus:
-- time-series validation
-- rolling and MoM metrics
-- anomaly detection
-- revenue behavior analysis
 
-Directory: `projects/sales-analysis`
+- cohort construction based on citation behavior
+- repeat violation and retention-style metrics
+- grain definition and aggregation validation
+- consistency checks between SQL and pandas results
+- city-level operational analytics
+
+This project is built on San Francisco parking citation data and focuses on 
+behavioral patterns, repeat violations, and analytical consistency across tools.
 
 -----
 
-### Cohort and Retention Analysis
-Tools: SQL, pandas
+### U.S. Federal Contracts - Data Quality and Market Concentration Analysis
+
+Tools: Python, pandas, SQL
+Directory: `projects/us_federal_contracts`
 
 Focus:
-- cohort construction
-- retention metrics
-- grain and join validation
-- consistency between SQL and pandas results
-
-Directory: `projects/cohort-analysis`
-
------
-
-### Data Quality and Sanity Checks
-Tools: Python, pandas
-
-Focus:
-- schema and type validation
-- duplicate detection by business key
+- schema and data type validation
+- duplicate detection using business keys
 - range and domain checks
 - time coverage validation
 - aggregate reconciliation
+- vendor concentration and spend distribution analysis
 
-Directory: `projects/data-quality-checks`
-
------
-
-### API to pandas Data Pipeline
-Tools: requests, pandas
-
-Focus:
-- API request handling
-- JSON normalization
-- schema validation
-- transformation into analytical tables
-
-Directory: `projects/api-data-pipeline`
+This project analyzes FY 2025 U.S. federal prime contract awards across all agencies, 
+with a strong emphasis on data quality, analytical correctness, and market-level insights.
 
 -----
 
 ## Notes on Data
 
 Raw data files are intentionally not stored in this repository.  
-Projects use synthetic or publicly available datasets.  
+Projects use publicly available datasets.  
 Data assumptions and structure are documented in each project README.
 
 -----
