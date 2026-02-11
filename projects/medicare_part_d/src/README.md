@@ -25,6 +25,13 @@ Data quality validation logic, including:
 Transformation logic used to construct analytical data marts from the cleaned
 data layer, including aggregation and structural enrichment.
 
+## build_marts.py
+This notebook is responsible for:
+- loading cleaned source data,
+- performing data quality checks,
+- constructing analytical data marts,
+- saving the marts in Parquet format.
+
 ## Design Principles
 - The 'src/' layer is responsible only for data preparation.
 - Pandas is used exclusively for ingestion, validation, and transformation.

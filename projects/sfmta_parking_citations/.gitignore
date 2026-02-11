@@ -1,0 +1,22 @@
+# Python environment
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+
+# OS files
+.DS_Store
+
+# Raw data
+data/raw/
+
+# Processed data
+data/clean/*.parquet
+data/mart/*.parquet
+
+# Databases
+*.duckdb
+*.db
+
+# Temporary / logs
+*.log
+reports/tmp/
