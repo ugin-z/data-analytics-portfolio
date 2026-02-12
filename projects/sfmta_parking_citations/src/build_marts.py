@@ -38,8 +38,8 @@ def build_mart_citations_year(df_clean):
     total_citations = grouped['citations_count'].sum()
     total_fines = grouped['total_fines_amount'].sum()
 
-    grouped['share_of_total_citations'] = grouped['citations_count'] / total_citations
-    grouped['share_of_total_fines'] = grouped['total_fines_amount'] / total_fines
+    grouped['share_of_total_citations'] = grouped['citations_count'] / total_citations if total_citations else 0.0
+    grouped['share_of_total_fines'] = grouped['total_fines_amount'] / total_fines if total_fines else 0.0
 
     return grouped
 
@@ -53,8 +53,8 @@ def validate_mart_citations_year(df_mart):
         assert nulls == 0, f'Column {col} contains {nulls} empty values in mart'
 
     if 'citations_count' in df_mart.columns:
-        negative_fines = (df_mart['citations_count'] < 0).sum()
-        assert negative_fines == 0, f"Negative values 'citations_count' are present."
+        negative_count = (df_mart['citations_count'] < 0).sum()
+        assert negative_count == 0, f"Negative values 'citations_count' are present."
 
     if 'total_fines_amount' in df_mart.columns:
         negative_amount = (df_mart['total_fines_amount'] < 0).sum()
