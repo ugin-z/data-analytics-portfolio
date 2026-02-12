@@ -9,3 +9,7 @@ mart:
 
 run_analysis:
 	duckdb < run_analysis.sql
+
+DuckDB:
+	duckdb
+	.read run_analysis.sql

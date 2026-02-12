@@ -16,8 +16,8 @@ select
     a.violation_description,
     a.citations_count,
     a.total_fines_amount,
-    a.avg_fine_amount,
-    a.citations_count / nullif(t.all_citations_count, 0) as share_of_total_citations
+    round(a.avg_fine_amount, 2),
+    round(a.citations_count / nullif(t.all_citations_count, 0), 4) as share_of_total_citations
 from agg as a
 cross join totals as t
 order by a.citations_count desc

@@ -23,57 +23,59 @@ def build_mart_citations_year(df_clean):
         
     df = df_clean[required_cols].copy()
 
-    df = df.dropna(subset=['violation_description', 'year'])
+    df = df.dropna(subset=['violation_description', 'year', 'fine_amount'])
 
     grouped = (
         df
         .groupby(['violation_description', 'year'], as_index=False)
         .agg(
-            citations_count=('violation_description', 'size'),
-            total_fines_amount=('fine_amount', 'sum'),
-            avg_fine_amount=('fine_amount', 'mean')
+            citations_count=('fine_amount', 'size'),
+            total_fines_amount=('fine_amount', 'sum')
         )
     )
 
-    total_citations = grouped['citations_count'].sum()
-    total_fines = grouped['total_fines_amount'].sum()
+    grouped['avg_fine_amount'] = grouped['total_fines_amount'] / grouped['citations_count'].where(grouped['citations_count'] != 0)
 
-    grouped['share_of_total_citations'] = grouped['citations_count'] / total_citations if total_citations else 0.0
-    grouped['share_of_total_fines'] = grouped['total_fines_amount'] / total_fines if total_fines else 0.0
+    grouped['share_of_year_citations'] = (grouped['citations_count'] / grouped.groupby('year')['citations_count'].transform('sum'))
+    grouped['share_of_year_fines'] = (grouped['total_fines_amount'] / grouped.groupby('year')['total_fines_amount'].transform('sum'))
 
     return grouped
 
 def validate_mart_citations_year(df_mart):
     grain_cols = ['violation_description', 'year']
+
     grain_dups = df_mart.duplicated(subset=grain_cols).sum()
     assert grain_dups == 0, f'Found {grain_dups} duplicates for grain {grain_cols}'
 
     for col in grain_cols:
         nulls = df_mart[col].isna().sum()
-        assert nulls == 0, f'Column {col} contains {nulls} empty values in mart'
+        assert nulls == 0, f'Column {col} contains {nulls} null values in mart'
 
-    if 'citations_count' in df_mart.columns:
-        negative_count = (df_mart['citations_count'] < 0).sum()
-        assert negative_count == 0, f"Negative values 'citations_count' are present."
+    bad_year = ((df_mart['year'] < 2021) | (df_mart['year'] > 2025)).sum()
+    assert bad_year == 0, f'Found {bad_year} rows with year outside 2021..2025'
 
-    if 'total_fines_amount' in df_mart.columns:
-        negative_amount = (df_mart['total_fines_amount'] < 0).sum()
-        assert negative_amount == 0, f"Negative values 'total_fines_amount' are present."
+    bad_count = (df_mart['citations_count'] <= 0).sum()
+    assert bad_count == 0, f"Found {bad_count} rows with citations_count <= 0"
 
-    esp = 1e-6
-    if 'share_of_total_citations' in df_mart.columns:
-        bad_share_cit = (
-            (df_mart['share_of_total_citations'] < -esp) |
-            (df_mart['share_of_total_citations'] > 1 + esp)
-        ).sum()
-        assert bad_share_cit == 0, "Incorrect 'share_of_total_citations'"
+    bad_amount = (df_mart['total_fines_amount'] < 0).sum()
+    assert bad_amount == 0, "Negative values in total_fines_amount are present"
 
-    if 'share_of_total_fines' in df_mart.columns:
+    if 'avg_fine_amount' in df_mart.columns:
+        bad_avg = (df_mart['avg_fine_amount'].fillna(0) < 0).sum()
+        assert bad_avg == 0, "Negative values in avg_fine_amount are present"
+
+    eps = 1e-6
+    for col in ['share_of_year_citations', 'share_of_year_fines']:
+        assert col in df_mart.columns, f"Missing expected column: {col}"
+
         bad_share = (
-            (df_mart['share_of_total_fines'] < -esp) |
-            (df_mart['share_of_total_fines'] > 1 + esp)
+            (df_mart[col] < -eps) |
+            (df_mart[col] > 1 + eps)
         ).sum()
-        assert bad_share == 0, "Incorrect 'share_of_total_fines'"
+        assert bad_share == 0, f"Incorrect '{col}' values (outside [0,1])"
+
+        s = df_mart.groupby('year')[col].sum()
+        assert ((s - 1.0).abs() < 1e-3).all(), f"{col} does not sum to ~1 by year"
 
 def save_mart_citations_year(df_mart, project_root):
     mart_dir = project_root / 'data' / 'mart'
@@ -83,6 +85,67 @@ def save_mart_citations_year(df_mart, project_root):
     df_mart.to_parquet(mart_path, index=False)
 
     print(f'Saved mart_citations_year to: {mart_path}')
+
+# Build mart: mart_citations_year_month
+
+def build_mart_citations_year_month(df_clean):
+    required_cols = ['violation_description', 'month', 'year', 'fine_amount']
+
+    for col in required_cols:
+        if col not in df_clean.columns:
+            raise KeyError(f"Expected column '{col}' is missing.")
+        
+    df = df_clean[required_cols].copy()
+
+    df = df.dropna(subset=['violation_description', 'year', 'month'])
+
+    grouped = (
+        df
+        .groupby(['violation_description', 'year', 'month'], as_index=False)
+        .agg(
+            citations_count=('fine_amount', 'size'),
+            total_fines_amount=('fine_amount', 'sum')
+        )
+    )
+
+    grouped['avg_fine_amount'] = grouped['total_fines_amount'] / grouped['citations_count'].where(grouped['citations_count'] != 0)
+
+    grouped['share_of_year_citations'] = grouped['citations_count'] / grouped.groupby('year')['citations_count'].transform('sum')
+    grouped['share_of_year_fines'] = grouped['total_fines_amount'] / grouped.groupby('year')['total_fines_amount'].transform('sum')
+
+    return grouped
+
+def validate_mart_citations_year_month(df_mart):
+    grain_cols = ['violation_description', 'year', 'month']
+    grain_dups = df_mart.duplicated(subset=grain_cols).sum()
+    assert grain_dups == 0, f'Found {grain_dups} duplicates for grain {grain_cols}'
+
+    for col in grain_cols:
+        nulls = df_mart[col].isna().sum()
+        assert nulls == 0, f'Column {col} contains {nulls} empty values in mart'
+
+    bad_month = ((df_mart['month'] < 1) | (df_mart['month'] > 12)).sum()
+    assert bad_month == 0, f'Found {bad_month} rows with month outside [1-12]'
+
+    assert (df_mart['citations_count'] >= 0).all()
+    assert (df_mart['total_fines_amount'] >= 0).all()
+
+    eps = 1e-6
+    for col in ['share_of_year_citations', 'share_of_year_fines']:
+        bad = ((df_mart[col] < -eps) | (df_mart[col] > 1 + eps)).sum()
+        assert bad == 0, f"Incorrect '{col}' values"
+
+    s1 = df_mart.groupby('year')['share_of_year_fines'].sum()
+    assert ((s1 - 1.0).abs() < 1e-3).all(), "share_of_year_fines does not sum to ~1 by year"
+
+def save_mart_citations_year_month(df_mart, project_root):
+    mart_dir = project_root / 'data' / 'mart'
+    mart_dir.mkdir(parents=True, exist_ok=True)
+
+    mart_path = mart_dir / 'mart_citations_year_month.parquet'
+    df_mart.to_parquet(mart_path, index=False)
+
+    print(f'Saved mart_citations_year_month to: {mart_path}')
 
 # Build mart: mart_state_year
 
@@ -219,6 +282,12 @@ def main():
     print(df_mart_citations.head())
     validate_mart_citations_year(df_mart_citations)
     save_mart_citations_year(df_mart_citations, project_root)
+
+    df_mart_citations_year_month = build_mart_citations_year_month(df_clean)
+    print('mart_citations_year_month shape:', df_mart_citations_year_month.shape)
+    print(df_mart_citations_year_month.head())
+    validate_mart_citations_year_month(df_mart_citations_year_month)
+    save_mart_citations_year_month(df_mart_citations_year_month, project_root)
 
     df_mart_state = build_mart_state_year(df_clean)
     print('mart_state_year shape:', df_mart_state.shape)

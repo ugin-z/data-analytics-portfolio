@@ -1,45 +1,24 @@
--- with base as (
---     select
---         vehicle_state,
---         sum(citations_count) as citations_count
---     from mart_state_year
---     where vehicle_state is not null 
---     group by vehicle_state
--- ),
--- totals as (
---     select
---         sum(citations_count) as total_citations
---     from base
--- )
--- select
---     sum(case when vehicle_state <> 'CA' then citations_count else 0 end) as non_ca_citations,
---     t.total_citations,
---     sum(case when vehicle_state <> 'CA' then citations_count else 0 end) /
---         nullif(t.total_citations, 0) as non_ca_share
--- from base
--- cross join totals as t
--- group by t.total_citations;
-
-
-
 with base as (
     select
-        vehicle_state,
-        sum(citations_count) as citations_count
+        (case when vehicle_state = 'CA' then 'CA' else 'Non-CA' end) as state_group,
+        sum(citations_count) as citations_count,
+        sum(total_fines_amount) as total_fines_amount
     from mart_state_year
-    where vehicle_state is not null 
-    group by vehicle_state
+    where vehicle_state is not null
+    group by state_group
 ),
 totals as (
     select
-        sum(citations_count) as total_citations
+        sum(citations_count) as all_citations_count,
+        sum(total_fines_amount) as all_fines_amount
     from base
 )
 select
-    sum(case when vehicle_state <> 'CA' then citations_count else 0 end) as non_ca_citations,
-    t.total_citations,
-    sum(case when vehicle_state <> 'CA' then citations_count else 0 end) /
-        nullif(t.total_citations, 0) as non_ca_share
-from base
+    b.state_group,
+    b.citations_count,
+    b.total_fines_amount,
+    round(b.citations_count / nullif(t.all_citations_count, 0), 4) as share_of_total_citations,
+    round(b.total_fines_amount / nullif(t.all_fines_amount, 0), 4) as share_of_total_fines
+from base as b
 cross join totals as t
-group by t.total_citations;
+order by b.state_group;

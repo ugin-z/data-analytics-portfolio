@@ -21,8 +21,8 @@ select
     violation_rank,
     violation_description,
     total_fines_amount,
-    share_of_total_fines,
-    cumulative_share_of_total_fines,
+    round(share_of_total_fines, 4),
+    round(cumulative_share_of_total_fines, 4),
     (cumulative_share_of_total_fines <= 0.80) as in_top_80_pct_bucket
 from ranked
 order by violation_rank;
