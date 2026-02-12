@@ -52,7 +52,7 @@ def coerce_dtypes(df):
         if col in df.columns:
             df[col] = df[col].astype('string')
     
-    return df
+    return df 
 
 def save_clean_df(df, project_root):
 
