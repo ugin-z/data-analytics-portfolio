@@ -42,7 +42,16 @@ def coerce_dtypes(df):
 
     if 'fine_amount' in df.columns:
 
-        df['fine_amount'] = pd.to_numeric(df['fine_amount'], errors = 'coerce')
+        s = df['fine_amount']
+
+        s = (
+            s
+            .astype('string')
+            .str.replace(r'[^0-9.\-]', '', regex=True)
+            .replace('', pd.NA)
+        )
+
+        df['fine_amount'] = pd.to_numeric(s, errors='coerce')
 
     if 'citation_id' in df.columns:
 

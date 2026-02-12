@@ -2,10 +2,9 @@ with monthly as (
     select
         year,
         month,
-        count(*) as citations_count,
-        sum(fine_amount) as total_fines_amount,
-        sum(fine_amount) / nullif(count(*), 0) as avg_fine_amount
-    from parking_citations_clean
+        sum(citations_count) as citations_count,
+        sum(total_fines_amount) as total_fines_amount
+    from mart_citations_month
     where year is not null 
         and month is not null
     group by year, month
