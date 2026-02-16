@@ -81,7 +81,7 @@ Focus:
 - revenue benchmarking vs historical average (2021–2024)
 - year-to-date and seasonal trend analysis
 - Pareto analysis and revenue concentration by violation type
-- structured raw → clean → mart data modeling
+- structured raw -> clean -> mart data modeling
 - analytical consistency between SQL and Python outputs
 
 This project analyzes San Francisco parking citation revenue trends and
