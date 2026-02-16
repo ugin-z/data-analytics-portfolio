@@ -44,7 +44,7 @@ Tableau Public:
   https://public.tableau.com/app/profile/yevhen.zinchenko/viz/SF_Parking_17712149962210/2025RevenuePerformancevsHistoricalBenchmark
 
 - Revenue Concentration Analysis
-  https://public.tableau.com/app/profile/yevhen.zinchenko/viz/RevenueConcentration/RevenueConcentrationAnalysis-2025
+  https://public.tableau.com/app/profile/yevhen.zinchenko/viz/RevenueConcentration-2025/RevenueConcentrationAnalysis-2025
 
 - San Francisco Parking Citations (2021-2025)
   https://public.tableau.com/app/profile/yevhen.zinchenko/viz/SFParkingCitations/SFParkingCitations-Overview
