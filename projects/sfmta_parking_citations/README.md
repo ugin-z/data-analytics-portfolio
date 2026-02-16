@@ -31,13 +31,12 @@ raw -> clean -> mart -> analytics
 ---
 
 ## Repository Structure
-
-'''
+```
 data/      -> raw, clean, and mart layers  
 src/       -> data pipeline scripts  
 sql/       -> analytical queries  
 reports/   -> business analysis summary  
-'''
+```
 
 ---
 
