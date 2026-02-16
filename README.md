@@ -52,7 +52,7 @@ The focus is not only on writing code, but on:
 
 ## Projects
 
-### Medicare Part D – Drug Spending Analytics (2023)
+### Medicare Part D - Drug Spending Analytics (2023)
 
 Tools: Python, pandas, requests, DuckDB, SQL, Tableau  
 Directory: 'projects/medicare_part_d'
@@ -86,25 +86,6 @@ Focus:
 
 This project analyzes San Francisco parking citation revenue trends and
 concentration patterns using a reproducible analytics pipeline and BI dashboards.
-
-
------
-
-### U.S. Federal Contracts - Data Quality and Market Concentration Analysis
-
-Tools: Python, pandas, SQL
-Directory: `projects/us_federal_contracts`
-
-Focus:
-- schema and data type validation
-- duplicate detection using business keys
-- range and domain checks
-- time coverage validation
-- aggregate reconciliation
-- vendor concentration and spend distribution analysis
-
-This project analyzes FY 2025 U.S. federal prime contract awards across all agencies, 
-with a strong emphasis on data quality, analytical correctness, and market-level insights.
 
 -----
 
