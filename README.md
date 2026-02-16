@@ -55,7 +55,7 @@ The focus is not only on writing code, but on:
 ### Medicare Part D - Drug Spending Analytics (2023)
 
 Tools: Python, pandas, requests, DuckDB, SQL, Tableau  
-Directory: 'projects/medicare_part_d'
+Directory: `projects/medicare_part_d`
 
 Focus:
 
@@ -74,7 +74,7 @@ structured transformation, data quality validation, and revenue concentration an
 ### SFMTA Parking Revenue Analytics (2021–2025)
 
 Tools: Python, pandas, DuckDB, SQL, Tableau  
-Directory: 'projects/sfmta_parking_citations'
+Directory: `projects/sfmta_parking_citations`
 
 Focus:
 

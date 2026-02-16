@@ -43,10 +43,10 @@ reports/   -> business analysis summary
 ## Run
 
 Install dependencies:
-pip install -r requirements.txt
+`pip install -r requirements.txt`
 
 Build marts:
-python src/build_marts.py
+`python src/build_marts.py`
 
 ## Tableau Dashboard
 

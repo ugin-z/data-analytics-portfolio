@@ -13,4 +13,4 @@ No data preparation or mart construction is performed in this notebook.
 All analytics rely exclusively on the mart layer.
 
 ## Execution Order
-- run 'analysis.ipynb' to perform the analysis.
+- run `analysis.ipynb` to perform the analysis.

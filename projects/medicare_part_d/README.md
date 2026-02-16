@@ -48,12 +48,12 @@ The analysis is built on three analytical data marts:
 - A deep dive into the highest-spending drugs shows that elevated total costs are primarily driven by high utilization rather than high cost per claim.
 
 ## Repository Structure
-
+```
 src/        - data ingestion, validation, and mart construction  
 data/       - raw, clean, and mart datasets (Parquet)  
 notebooks/  - mart construction and analytical notebooks  
 reports/    - executive summary and analytical findings  
-
+```
 ## Tools & Technologies
 
 - Python (pandas)
