@@ -52,39 +52,41 @@ The focus is not only on writing code, but on:
 
 ## Projects
 
-### Medicare Part D - Sales Analysis with Rolling Metrics
+### Medicare Part D – Drug Spending Analytics (2023)
 
-Tools: Python, pandas, requests, SQL
-Directory: `projects/medicare_part_d`
+Tools: Python, pandas, requests, DuckDB, SQL, Tableau  
+Directory: 'projects/medicare_part_d'
 
 Focus:
-- analytical data modeling (raw -> clean -> mart)
+
+- structured data modeling (raw -> clean -> mart)
 - explicit grain definition and validation
 - data quality checks (duplicates, ranges, control totals)
 - drug spending analysis with price vs volume decomposition
-- concentration and distribution analysis using Pareto and scatter-based exploration, 
-with BI communication of insights
+- concentration analysis using Pareto and distribution-based exploration
+- BI-ready analytical outputs and dashboard communication
 
-This project analyzes U.S. Medicare Part D drug spending data, covering end-to-end ingestion, 
-transformation, data quality validation, and analytical reporting.
+This project analyzes U.S. Medicare Part D drug spending data, covering ingestion from public sources,
+structured transformation, data quality validation, and revenue concentration analysis.
 
 -----
 
-### SFMTA Parking Citations - Cohort and Retention Analysis
+### SFMTA Parking Revenue Analytics (2021–2025)
 
-Tools: Python, pandas, SQL
-Directory: `projects/sfmta_parking_citations`
+Tools: Python, pandas, DuckDB, SQL, Tableau  
+Directory: 'projects/sfmta_parking_citations'
 
 Focus:
 
-- cohort construction based on citation behavior
-- repeat violation and retention-style metrics
-- grain definition and aggregation validation
-- consistency checks between SQL and pandas results
-- city-level operational analytics
+- revenue benchmarking vs historical average (2021–2024)
+- year-to-date and seasonal trend analysis
+- Pareto analysis and revenue concentration by violation type
+- structured raw → clean → mart data modeling
+- analytical consistency between SQL and Python outputs
 
-This project is built on San Francisco parking citation data and focuses on 
-behavioral patterns, repeat violations, and analytical consistency across tools.
+This project analyzes San Francisco parking citation revenue trends and
+concentration patterns using a reproducible analytics pipeline and BI dashboards.
+
 
 -----
 
