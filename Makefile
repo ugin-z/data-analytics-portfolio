@@ -13,4 +13,3 @@ run_analysis:
 DuckDB:
 	duckdb
 	.read run_analysis.sql
-
