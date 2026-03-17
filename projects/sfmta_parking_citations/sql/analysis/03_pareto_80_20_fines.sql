@@ -1,28 +1,37 @@
-with agg as (
-    select
+WITH agg AS (
+    SELECT
         violation_description,
-        sum(total_fines_amount) as total_fines_amount
-    from mart_citations_year
-    group by violation_description
+        sum(total_fines_amount) AS total_fines_amount
+    FROM
+        mart_citations_year
+    GROUP BY
+        violation_description
 ),
-ranked as (
-    select
+ranked AS (
+    SELECT
         violation_description,
         total_fines_amount,
-        total_fines_amount / nullif(sum(total_fines_amount) over (), 0) as share_of_total_fines,
+        total_fines_amount / nullif(sum(total_fines_amount) over (), 0) AS share_of_total_fines,
         sum(total_fines_amount) over (
-            order by total_fines_amount desc
-            rows between unbounded preceding and current row
-        ) / nullif(sum(total_fines_amount) over (), 0) as cumulative_share_of_total_fines,
-        row_number () over (order by total_fines_amount desc) as violation_rank
-    from agg
+            ORDER BY
+                total_fines_amount DESC ROWS BETWEEN unbounded preceding
+                AND current ROW
+        ) / nullif(sum(total_fines_amount) over (), 0) AS cumulative_share_of_total_fines,
+        row_number () over (
+            ORDER BY
+                total_fines_amount DESC
+        ) AS violation_rank
+    FROM
+        agg
 )
-select
+SELECT
     violation_rank,
     violation_description,
     total_fines_amount,
     round(share_of_total_fines, 4),
     round(cumulative_share_of_total_fines, 4),
-    (cumulative_share_of_total_fines <= 0.80) as in_top_80_pct_bucket
-from ranked
-order by violation_rank;
+    (cumulative_share_of_total_fines <= 0.80) AS in_top_80_pct_bucket
+FROM
+    ranked
+ORDER BY
+    violation_rank;

@@ -1,24 +1,33 @@
-with agg as (
-    select
+WITH agg AS (
+    SELECT
         violation_description,
-        sum(citations_count) as citations_count,
-        sum(total_fines_amount) as total_fines_amount,
-        sum(total_fines_amount) / nullif(sum(citations_count), 0) as avg_fine_amount
-    from mart_citations_year
-    group by violation_description
+        sum(citations_count) AS citations_count,
+        sum(total_fines_amount) AS total_fines_amount,
+        sum(total_fines_amount) / nullif(sum(citations_count), 0) AS avg_fine_amount
+    FROM
+        mart_citations_year
+    GROUP BY
+        violation_description
 ),
-totals as (
-    select
-        sum(citations_count) as all_citations_count
-    from agg
+totals AS (
+    SELECT
+        sum(citations_count) AS all_citations_count
+    FROM
+        agg
 )
-select
+SELECT
     a.violation_description,
     a.citations_count,
     a.total_fines_amount,
     round(a.avg_fine_amount, 2),
-    round(a.citations_count / nullif(t.all_citations_count, 0), 4) as share_of_total_citations
-from agg as a
-cross join totals as t
-order by a.citations_count desc
-limit 10;
+    round(
+        a.citations_count / nullif(t.all_citations_count, 0),
+        4
+    ) AS share_of_total_citations
+FROM
+    agg AS a
+    CROSS JOIN totals AS t
+ORDER BY
+    a.citations_count DESC
+LIMIT
+    10;
