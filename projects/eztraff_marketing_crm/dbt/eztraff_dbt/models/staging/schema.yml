@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_data_mrktg_crm
+    description: 'Clean staging model for merged marketing and CRM lead data.'
+    columns:
+      - name: lead_id
+        description: 'Unique lead identifier from the marketing/CRM pipeline.'
+        data_tests:
+          - unique
+          - not_null
+      - name: offer_id
+        description: 'Marketing proposal ID.'
+        data_tests:
+          - not_null
+      - name: affiliate_id
+        description: 'Webmaster or Affiliate Agency ID.'
+        data_tests:
+          - not_null
+      - name: site_url
+        description: 'Direct link to the website the lead came from.'
+      - name:  ad_channel_name
+        description: 'Traffic channel.'
+      - name:  ad_feed_type
+        description: 'Ad feed type.'
+      - name:  ad_id
+        description: 'Ad ID.'
+      - name:  ad_placement_id
+        description: 'Ad placement ID.'
+      - name:  cancel_reason
+        description: 'Reason for lead cancellation.'
+      - name: order_status
+        description: 'Mandatory lead status.'

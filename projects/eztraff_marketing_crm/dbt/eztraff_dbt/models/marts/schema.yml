@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: mart_campaign_performance_q1_q2
+    description: 'Campaign performance mart.'
+    columns:
+      - name: lead_id
+        description: 'Unique lead identifier from the marketing/CRM pipeline.'
+        data_tests:
+          - unique
+          - not_null
+      - name: offer_id
+        description: 'Marketing proposal ID.'
+        data_tests:
+          - not_null
+      - name: affiliate_id
+        description: 'Webmaster or Affiliate Agency ID.'
+        data_tests:
+          - not_null

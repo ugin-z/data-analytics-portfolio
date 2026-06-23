@@ -1,15 +1,23 @@
 from extract_marketing_api import extract_eztraff_data
 from load_crm_csv import load_crm_data
 from transform_data import transform_data
+from bigquery_loader import bigquery_loader
 
-from_date = '2025-07-01'
-to_date = '2025-12-31'
+FROM_DATE = '2025-07-01'
+TO_DATE = '2025-12-31'
+
+PROJECT_ID = 'eztraff-analytics'
+CSV_PATH = f'data/processed/processed_data_{FROM_DATE}_{TO_DATE}.csv'
+TABLE_ID = f'{PROJECT_ID}.raw.marketing_crm_q1_q2'
 
 def main():
-    df_mrkt = extract_eztraff_data(from_date, to_date)
+    df_mrkt = extract_eztraff_data(FROM_DATE, TO_DATE)
     df_crm = load_crm_data()
-    df_transform = transform_data(df_mrkt, df_crm, from_date, to_date)
-    df_transform.to_csv(f'data/clean/clean_data_{from_date}_{to_date}.csv', index=False)
+
+    df_transform = transform_data(df_mrkt, df_crm, FROM_DATE, TO_DATE)
+    df_transform.to_csv(CSV_PATH, index=False)
+
+    bigquery_loader(CSV_PATH, TABLE_ID, PROJECT_ID)
 
     print('Pipeline completed successfully.')
 

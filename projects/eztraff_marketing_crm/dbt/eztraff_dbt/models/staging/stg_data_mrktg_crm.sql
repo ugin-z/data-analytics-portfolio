@@ -1,0 +1,37 @@
+SELECT
+    SAFE_CAST(lead_id AS INT64) AS lead_id,
+    SAFE_CAST(offer_id AS INT64) AS offer_id,
+    SAFE_CAST(site_id AS INT64) AS site_id,
+    SAFE_CAST(wm_id AS INT64) AS affiliate_id,
+    SAFE_CAST(sales_dep_id AS INT64) AS sales_dept_id,
+    offer_name_x AS marketing_offer_name,
+    site_url,
+    country,
+    currency,
+    ad_channel_name,
+    ad_feed_type,
+    ad_id,
+    ad_placement_id,
+    TIMESTAMP(date_lead) AS lead_created_date,
+    TIMESTAMP(date_processed) AS lead_processed_date,
+    TIMESTAMP(date_dispatched) AS lead_dispatched_date,
+    TIMESTAMP(date_paid) AS lead_paid_date,
+    name AS customer_name,
+    gender_y AS gender,
+    SAFE_CAST(age AS INT64) AS age,
+    delivery_region,
+    delivery_city,
+    order_status,
+    cancel_reason,
+    delivery_status,
+    manager_name,
+    SAFE_CAST(total_cost AS NUMERIC) AS total_cost,
+    ip_y AS ip,
+    CASE
+        WHEN order_status NOT IN ('Аннуляция', 'Треш', 'Отмена') THEN TRUE
+        ELSE FALSE
+    END AS is_canceled,
+    date_paid IS NOT NULL AS is_paid,
+    date_dispatched IS NOT NULL AS is_dispatched,
+    order_status IS NOT NULL AS has_crm_record
+FROM {{ source('raw', 'marketing_crm_q1_q2') }}

@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: raw
+    database: eztraff-analytics
+    schema: raw
+    tables:
+      - name: marketing_crm_q1_q2

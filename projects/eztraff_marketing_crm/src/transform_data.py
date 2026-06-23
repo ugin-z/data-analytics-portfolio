@@ -1,6 +1,6 @@
 import pandas as pd
 
-def clean_data_mrkt(df):
+def processed_data_mrkt(df):
 
     df = df.copy()
 
@@ -80,7 +80,7 @@ def clean_data_mrkt(df):
 
     return df
 
-def clean_data_crm(df):
+def processed_data_crm(df):
 
     df = df.copy()
 
@@ -169,7 +169,7 @@ def clean_data_crm(df):
 
     return df
 
-def clean_data_crm_filter(df, from_date, to_date):
+def processed_data_crm_filter(df, from_date, to_date):
 
     df = df[
         (df['date_lead'] >= from_date) &
@@ -262,16 +262,16 @@ def merged_data_validate(df_final, df_a):
 
 def transform_data(df_mrkt, df_crm, from_date, to_date):
 
-    df_mrkt_clean = clean_data_mrkt(df_mrkt)
-    df_crm_clean = clean_data_crm(df_crm)
+    df_mrkt_processed = processed_data_mrkt(df_mrkt)
+    df_crm_processed = processed_data_crm(df_crm)
 
-    df_crm_clean_filtered = clean_data_crm_filter(df_crm_clean, from_date, to_date)
+    df_crm_processed_filtered = processed_data_crm_filter(df_crm_processed, from_date, to_date)
 
-    validate_data_mrkt(df_mrkt_clean)
-    validate_data_crm(df_crm_clean_filtered)
+    validate_data_mrkt(df_mrkt_processed)
+    validate_data_crm(df_crm_processed_filtered)
 
-    df = merge_data(df_mrkt_clean, df_crm_clean)
+    df = merge_data(df_mrkt_processed, df_crm_processed)
 
-    merged_data_validate(df, df_mrkt_clean)
+    merged_data_validate(df, df_mrkt_processed)
 
     return df
