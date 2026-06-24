@@ -14,10 +14,10 @@ def extract_eztraff_data(from_date, to_date):
 
     load_dotenv()
 
-    API_KEY = os.getenv('API_KEY')
+    API_KEY = os.getenv('API_KEY_COMP')
     BASE_URL = os.getenv('BASE_URL')
 
-    endpoint = 'list.json?id='
+    endpoint = 'comp/list.json?id='
     url = BASE_URL + endpoint + API_KEY
 
     payload = {

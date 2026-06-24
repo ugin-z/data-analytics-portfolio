@@ -1,8 +1,10 @@
-from pathlib import Path
+import logging
 import pandas as pd
 from google.cloud import bigquery
 
-def bigquery_loader(
+logger = logging.getLogger(__name__)
+
+def load_to_bigquery(
         csv_path,
         table_id,
         project_id,
@@ -26,4 +28,4 @@ def bigquery_loader(
 
     job.result()
 
-    print(f'Loaded {job.output_rows} rows to {table_id}')
+    logger.info(f'Loaded {job.output_rows} rows to {table_id}')
